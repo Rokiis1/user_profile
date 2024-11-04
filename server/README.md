@@ -22,8 +22,6 @@ This project is a user profile application built using Node.js, Express, and Pos
 
 - `models/` - This directory is for defining the data models and writing native SQL queries. Models represent the structure of your database tables and provide methods to interact with the database.
 
-- `schemas/` - This directory is typically used for defining validation schemas. These schemas ensure that the data being processed meets certain criteria before it is handled by the controllers.
-
 - `configs/` - This directory contains configuration files for your application. These files might include database connection settings, environment variables, and other configuration details.
 
 - `routes/` - This directory defines the routes for your application. Routes map HTTP requests to specific controller actions.

@@ -1,4 +1,4 @@
-import { pool } from "../config/postgresSettings.mjs";
+import { pool } from "../configs/postgresSettings.mjs";
 
 const usersModel = {
   getUsers: async () => {
