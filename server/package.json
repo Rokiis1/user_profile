@@ -9,7 +9,8 @@
     "start:dev": "node --watch index.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "build": "node build.js"
+    "build": "node build.js",
+    "clean": "rm -rf dist"
   },
   "keywords": [],
   "author": "",
