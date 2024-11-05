@@ -9,12 +9,16 @@
     "start:dev": "node --watch index.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "build": "node build.js"
+    "build": "node build.js",
+    "clean": "rm -rf dist"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-errors": "^3.0.0",
+    "ajv-formats": "^3.0.1",
     "express": "^4.21.1",
     "pg": "^8.13.1"
   },

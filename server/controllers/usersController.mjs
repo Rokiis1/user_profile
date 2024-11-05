@@ -36,13 +36,6 @@ const usersController = {
   getUserById: async (req, res) => {
     const { userId } = req.params;
 
-    if (!userId || isNaN(userId)) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid user ID or user ID is missing",
-      });
-    }
-
     try {
       const user = await usersModel.getUserById(userId);
       res.status(200).json({
@@ -74,45 +67,6 @@ const usersController = {
   createUser: async (req, res) => {
     const { username, email, password } = req.body;
 
-    if (!username || typeof username !== "string" || username.trim() === "") {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid username",
-      });
-    }
-
-    if (!email || typeof email !== "string" || email.trim() === "") {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid email",
-      });
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid email format",
-      });
-    }
-
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      return res.status(400).json({
-        status: "error",
-        message:
-          "Invalid password. Must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.",
-      });
-    }
-
-    if (!password || typeof password !== "string" || password.length < 8) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid password. Must be at least 8 characters long.",
-      });
-    }
-
     try {
       const user = await usersModel.createUser(username, email, password);
       res.status(201).json({
@@ -133,6 +87,7 @@ const usersController = {
           message: "Username already exists",
         });
       }
+
       if (error.message === "Database connection was refused") {
         return res.status(503).json({
           status: "error",
@@ -156,35 +111,6 @@ const usersController = {
   updateUser: async (req, res) => {
     const { userId } = req.params;
     const { username, email } = req.body;
-
-    if (!userId || isNaN(userId)) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid user ID",
-      });
-    }
-
-    if (username && (typeof username !== "string" || username.trim() === "")) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid username",
-      });
-    }
-
-    if (email && (typeof email !== "string" || email.trim() === "")) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid email",
-      });
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (email && !emailRegex.test(email)) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid email format",
-      });
-    }
 
     try {
       const user = await usersModel.updateUser(userId, { username, email });
@@ -230,13 +156,6 @@ const usersController = {
   patchUserPassword: async (req, res) => {
     const { userId } = req.params;
     const { password } = req.body;
-
-    if (!userId || isNaN(userId)) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid user ID or user ID is missing",
-      });
-    }
 
     if (!password || typeof password !== "string" || password.length < 8) {
       return res.status(400).json({
@@ -483,20 +402,6 @@ const usersController = {
     limit = parseInt(limit) || 10;
     const offset = (page - 1) * limit;
 
-    if (isNaN(page) || page <= 0) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid page number",
-      });
-    }
-
-    if (isNaN(limit) || limit <= 0) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid limit number",
-      });
-    }
-
     try {
       const users = await usersModel.getPaginatedUsersProfile(limit, offset);
       const totalUsers = await usersModel.getTotalUsersCount();
@@ -529,13 +434,6 @@ const usersController = {
 
   getUserProfileById: async (req, res) => {
     const { userId } = req.params;
-
-    if (!userId || isNaN(userId)) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid user ID or user ID is missing",
-      });
-    }
 
     try {
       const userProfile = await usersModel.getUserProfileById(userId);
@@ -607,13 +505,6 @@ const usersController = {
   sortUserProfiles: async (req, res) => {
     const { sortBy, sortOrder } = req.query;
 
-    if (!sortBy) {
-      return res.status(400).json({
-        status: "error",
-        message: "SortBy parameter is required",
-      });
-    }
-
     try {
       const userProfiles = await usersModel.sortUserProfiles(sortBy, sortOrder);
       res.status(200).json({
@@ -634,15 +525,7 @@ const usersController = {
           message: "Service Unavailable: Database connection was refused",
         });
       }
-      if (
-        error.message.startsWith("Invalid sort column") ||
-        error.message.startsWith("Invalid sort order")
-      ) {
-        return res.status(400).json({
-          status: "error",
-          message: error.message,
-        });
-      }
+
       res.status(500).json({
         status: "error",
         message: `Internal Server Error: ${error.message}`,
@@ -677,64 +560,6 @@ const usersController = {
   updateUserProfile: async (req, res) => {
     const { userId } = req.params;
     const { firstName, lastName, bio, profilePicture, age, country } = req.body;
-
-    if (!userId || isNaN(userId)) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid user ID",
-      });
-    }
-
-    if (
-      firstName !== undefined &&
-      (typeof firstName !== "string" || firstName.trim() === "")
-    ) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid first name",
-      });
-    }
-
-    if (
-      lastName !== undefined &&
-      (typeof lastName !== "string" || lastName.trim() === "")
-    ) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid last name",
-      });
-    }
-
-    if (bio !== undefined && typeof bio !== "string") {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid bio",
-      });
-    }
-
-    if (profilePicture !== undefined && typeof profilePicture !== "string") {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid profile picture URL",
-      });
-    }
-
-    if (age !== undefined && (isNaN(age) || age <= 0)) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid age",
-      });
-    }
-
-    if (
-      country !== undefined &&
-      (typeof country !== "string" || country.trim() === "")
-    ) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid country",
-      });
-    }
 
     try {
       const updatedProfile = await usersModel.updateUserProfile(

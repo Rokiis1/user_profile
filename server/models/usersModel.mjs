@@ -564,16 +564,6 @@ const usersModel = {
     try {
       client = await pool.connect();
 
-      const validSortColumns = ["username", "email", "first_name", "last_name"];
-      const validSortOrders = ["ASC", "DESC"];
-
-      if (!sortBy || !validSortColumns.includes(sortBy)) {
-        throw new Error(`Invalid sort column: ${sortBy}`);
-      }
-      if (!validSortOrders.includes(sortOrder.toUpperCase())) {
-        throw new Error(`Invalid sort order: ${sortOrder}`);
-      }
-
       const query = `
           SELECT 
               users.id AS user_id, 
