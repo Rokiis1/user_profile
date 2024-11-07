@@ -42,7 +42,7 @@ export const userValidationSchema = {
         minLength: 8,
         maxLength: 255,
         pattern:
-          "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
+          "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.,])[A-Za-z\\d@$!%*?&.,]{8,255}$",
         errorMessage: {
           type: "Password must be a string",
           minLength: "Password must be at least 8 characters long",
@@ -308,6 +308,21 @@ export const userValidationSchema = {
       required: {
         page: "Page parameter is required",
         limit: "Limit parameter is required",
+      },
+    },
+  },
+  loginSchema: {
+    type: "object",
+    properties: {
+      username: { type: "string", minLength: 6 },
+      password: { type: "string", minLength: 8 },
+    },
+    required: ["username", "password"],
+    additionalProperties: false,
+    errorMessage: {
+      required: {
+        username: "Username is required",
+        password: "Password is required",
       },
     },
   },

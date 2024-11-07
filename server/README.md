@@ -5,6 +5,8 @@
 - [Package Manager](#package-manager)
 - [Database Structure](#database-structure)
 - [Error Handling Approach](#error-handling-approach)
+- [Authentication](#authentication)
+- [Authorization](#authorization)
 
 This project is a user profile application built using Node.js, Express, and PostgreSQL. It follows the Model-Controller (MC) pattern within a Monolith Architecture. PostgreSQL is used as the database for storing user profiles and related data.
 
@@ -18,6 +20,7 @@ This project is a user profile application built using Node.js, Express, and Pos
 - **esbuild:** JavaScript bundler and minifier. It compiles and bundles JavaScript and TypeScript code, optimizing it for production use.
 - **pnpm:** Package manager.
 - **ajv:** JSON Schema Validator.
+- **jsonwebtoken:** A library to sign, verify, and decode JSON Web Tokens (JWTs) for authentication
 
 ## Folder Structure
 
@@ -76,3 +79,15 @@ await client.query(defaultRoleQuery, roleValues);
 ## Error Handling Approach
 
 I chose Layered Error Handling with Specific Error Propagation as the approach for handling errors, which involves validating inputs at the client-side for immediate response, using `ajv` as middleware for server-side validation of request bodies, query parameters, and URL parameters to ensure data integrity and security. In the model layer manage database operations and constraints, and display detailed error messages to the client in the controller. However, handling errors in this way can lead to redundancy. To mitigate this problem, a centralized error handling approach can be used.
+
+## Authentication
+
+For this example, I chose a straightforward way to authenticate users using jsonwebtoken by implementing the Token-Based Authentication method. This approach directly handles initial authentication and subsequent requests by issuing a JWT upon successful login. The token allows access to different resources within the application. By using this method, we do not maintain any state on the server, meaning we don't save any information about the client in storage.
+
+In contrast, Session-Based Authentication involves the server creating a session and storing session data on the server side when the user logs in. The server then sends a session ID to the client, typically stored in a cookie.
+
+Another approach combines passport-local and passport-jwt for initial username/password authentication and then issues a jsonwebtoken JWT for subsequent requests.
+
+## Authorization
+
+I chose to use a simple way to handle authorization by using the Role-Based Access Control (RBAC) method. RBAC is a widely used approach that assigns permissions to users based on their roles within the system.

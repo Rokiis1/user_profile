@@ -20,6 +20,7 @@
     "ajv-errors": "^3.0.0",
     "ajv-formats": "^3.0.1",
     "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.1"
   },
   "devDependencies": {

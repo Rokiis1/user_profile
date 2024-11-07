@@ -2,11 +2,16 @@ import express from "express";
 
 import { usersController } from "../controllers/index.mjs";
 import { userValidationSchema } from "../schemas/index.mjs";
-import { schemaValidator, validateCountry } from "../middlewares/index.mjs";
+import {
+  schemaValidator,
+  validateCountry,
+  authenticateJWT,
+  isUser,
+} from "../middlewares/index.mjs";
 
 const router = express.Router();
 
-router.get("/", usersController.getUsers);
+router.get("/", authenticateJWT, isUser, usersController.getUsers);
 router.get("/profile", usersController.getUsersProfile);
 router.get(
   "/search",

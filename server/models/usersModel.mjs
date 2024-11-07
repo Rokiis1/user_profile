@@ -1,4 +1,4 @@
-import { pool } from "../configs/postgresSettings.mjs";
+import { pool } from "../configs/index.mjs";
 
 const usersModel = {
   getUsers: async () => {
@@ -740,6 +740,40 @@ const usersModel = {
     `;
       const result = await client.query(query);
       return result.rows;
+    } catch (error) {
+      if (error.code === "ECONNREFUSED") {
+        throw new Error("Database connection was refused");
+      }
+      throw new Error(error.message);
+    } finally {
+      if (client) {
+        client.release();
+      }
+    }
+  },
+
+  getUserByUsername: async (username) => {
+    let client;
+    try {
+      client = await pool.connect();
+      const query = `
+        SELECT users.id, users.username, user_secrets.password, roles.role_name
+        FROM users
+        JOIN user_secrets ON users.id = user_secrets.user_id
+        JOIN user_roles ON users.id = user_roles.user_id
+        JOIN roles ON user_roles.role_id = roles.id
+        WHERE users.username = $1
+      `;
+
+      const values = [username];
+
+      const result = await client.query(query, values);
+
+      if (result.rows.length === 0) {
+        throw new Error("User not found");
+      }
+
+      return result.rows[0];
     } catch (error) {
       if (error.code === "ECONNREFUSED") {
         throw new Error("Database connection was refused");

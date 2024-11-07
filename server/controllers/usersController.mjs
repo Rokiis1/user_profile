@@ -157,23 +157,6 @@ const usersController = {
     const { userId } = req.params;
     const { password } = req.body;
 
-    if (!password || typeof password !== "string" || password.length < 8) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid password. Must be at least 8 characters long.",
-      });
-    }
-
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      return res.status(400).json({
-        status: "error",
-        message:
-          "Invalid password. Must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.",
-      });
-    }
-
     try {
       const user = await usersModel.patchUserPassword(userId, password);
 
@@ -211,13 +194,6 @@ const usersController = {
 
   deleteUser: async (req, res) => {
     const { userId } = req.params;
-
-    if (!userId || isNaN(userId)) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid user ID or user ID is missing",
-      });
-    }
 
     try {
       await usersModel.deleteUser(userId);
@@ -257,63 +233,6 @@ const usersController = {
     const { userId } = req.params;
     const { firstName, lastName, bio, profilePicture, age, country } = req.body;
 
-    if (!userId || isNaN(userId)) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid user ID or user ID is missing",
-      });
-    }
-
-    if (
-      firstName !== undefined &&
-      (typeof firstName !== "string" || firstName.trim() === "")
-    ) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid first name",
-      });
-    }
-
-    if (
-      lastName !== undefined &&
-      (typeof lastName !== "string" || lastName.trim() === "")
-    ) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid last name",
-      });
-    }
-
-    if (bio !== undefined && typeof bio !== "string") {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid bio",
-      });
-    }
-
-    if (profilePicture !== undefined && typeof profilePicture !== "string") {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid profile picture URL",
-      });
-    }
-
-    if (age !== undefined && (isNaN(age) || age <= 0)) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid age",
-      });
-    }
-
-    if (
-      country !== undefined &&
-      (typeof country !== "string" || country.trim() === "")
-    ) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid country",
-      });
-    }
     try {
       const userProfile = await usersModel.createUserProfile(
         userId,
@@ -465,13 +384,6 @@ const usersController = {
 
   searchUserProfiles: async (req, res) => {
     const { query } = req.query;
-
-    if (!query) {
-      return res.status(400).json({
-        status: "error",
-        message: "Query parameter is required",
-      });
-    }
 
     try {
       const userProfiles = await usersModel.searchUserProfiles(query);
