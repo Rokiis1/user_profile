@@ -16,25 +16,25 @@ This project is a user profile application built using Node.js, Express, and Pos
 - **Express:** Node.js web application framework. Building server-side applications and APIs.
 - **node-postgres (PostgreSQL):** A non-blocking PostgreSQL client for Node.js. It allows to interact with a PostgreSQL database, execute SQL queries, and manage database connections.
 - **eslint:** A static code analysis tool for identifying and fixing problems in JavaScript code.
-- **prettier:** Code formatter that enforces a consistent style by parsing your code and re-printing it with its own rules.
-- **esbuild:** JavaScript bundler and minifier. It compiles and bundles JavaScript and TypeScript code, optimizing it for production use.
+- **prettier:** Code formatter that enforces a consistent style by parsing code and re-printing it with its own rules.
+- **esbuild:** JavaScript bundler and minifier. It compiles and bundles JavaScript code.
 - **pnpm:** Package manager.
 - **ajv:** JSON Schema Validator.
 - **jsonwebtoken:** A library to sign, verify, and decode JSON Web Tokens (JWTs) for authentication
 
 ## Folder Structure
 
-- `controllers/` - This directory contains the business logic of your application. Controllers handle incoming requests, process them (often by interacting with models), and send responses back to the client.
+- `controllers/` - This directory contains logic of the application. Controllers functionality will be handle incoming requests, process them (often by interacting with models), and send responses back to the client.
 
-- `models/` - This directory is for defining the data models and writing native SQL queries. Models represent the structure of your database tables and provide methods to interact with the database.
+- `models/` - This directory is for defining native SQL queries. Models represent the structure of database tables and provide methods to interact with the database.
 
-- `schemas/` - This directory is typically used for defining validation schemas. These schemas ensure that the data being processed meets certain criteria before it is handled by the controllers.
+- `configs/` - This directory contains configuration files for this application. These would be connection settings, environment variables, and other configuration details.
 
-- `configs/` - This directory contains configuration files for your application. These files might include database connection settings, environment variables, and other configuration details.
+- `routes/` - This directory defines the routes for this application. To request any resource from web-server
 
-- `routes/` - This directory defines the routes for your application. Routes map HTTP requests to specific controller actions.
+- `schemas/` - This directory used for defining validation schemas. These schemas ensure that the data meets criteria before it is handled by the controllers.
 
-- `middlewares/` - This directory contains middleware functions. Middlewares are functions that process requests before they reach the controllers. They can be used for tasks such as authentication, logging, error handling
+- `middlewares/` - This directory contains middleware functions. Middlewares are functions that process requests before they reach the controllers.
 
 ## Package Manager
 
