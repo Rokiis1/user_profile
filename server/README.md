@@ -20,11 +20,11 @@ This project is a user profile application built using Node.js, Express, and Pos
 
 ## Folder Structure
 
-- `controllers/` - This directory contains the business logic of your application. Controllers handle incoming requests, process them (often by interacting with models), and send responses back to the client.
+- `controllers/` - This directory contains logic of your application. Controllers handle incoming requests, process them (often by interacting with models), and send responses back to the client.
 
-- `models/` - This directory is for defining the data models and writing native SQL queries. Models represent the structure of your database tables and provide methods to interact with the database.
+- `models/` - This directory is for defining native SQL queries. Models represent the structure of your database tables and provide methods to interact with the database.
 
-- `configs/` - This directory contains configuration files for your application. These files might include database connection settings, environment variables, and other configuration details.
+- `configs/` - This directory contains configuration files for this application. These would be connection settings, environment variables, and other configuration details.
 
 - `routes/` - This directory defines the routes for your application. Routes map HTTP requests to specific controller actions.
 
