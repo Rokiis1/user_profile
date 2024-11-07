@@ -14,15 +14,15 @@ This project is a user profile application built using Node.js, Express, and Pos
 - **Express:** Node.js web application framework. Building server-side applications and APIs.
 - **node-postgres (PostgreSQL):** A non-blocking PostgreSQL client for Node.js. It allows to interact with a PostgreSQL database, execute SQL queries, and manage database connections.
 - **eslint:** A static code analysis tool for identifying and fixing problems in JavaScript code.
-- **prettier:** An opinionated code formatter that enforces a consistent style by parsing your code and re-printing it with its own rules. It helps in maintaining a uniform code style across the project.
-- **esbuild:** JavaScript bundler and minifier. It compiles and bundles JavaScript and TypeScript code, optimizing it for production use.
+- **prettier:** Code formatter that enforces a consistent style by parsing code and re-printing it with its own rules.
+- **esbuild:** JavaScript bundler and minifier. It compiles and bundles JavaScript code.
 - **pnpm:** Package manager.
 
 ## Folder Structure
 
 - `controllers/` - This directory contains logic of the application. Controllers functionality will be handle incoming requests, process them (often by interacting with models), and send responses back to the client.
 
-- `models/` - This directory is for defining native SQL queries. Models represent the structure of your database tables and provide methods to interact with the database.
+- `models/` - This directory is for defining native SQL queries. Models represent the structure of database tables and provide methods to interact with the database.
 
 - `configs/` - This directory contains configuration files for this application. These would be connection settings, environment variables, and other configuration details.
 
